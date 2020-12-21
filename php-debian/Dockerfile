@@ -31,29 +31,27 @@ RUN \
     rm /etc/apache2/sites-enabled/000-default.conf && \
     \
     apt-get update && \
-    apt-get install -y --no-install-recommends php7.4 php7.4-cli libapache2-mod-php7.4 \
-    php7.4-curl \
-    php7.4-intl \
-    php7.4-gd \
-    php7.4-mbstring \
-    php7.4-pdo \
-    php7.4-mysql \
-    php7.4-json \
-    php7.4-zip \
-    php7.4-xml \
-    php7.4-imagick \
-    php7.4-redis \
-    php7.4-bcmath \
-    php7.4-imap && \
+    apt-get install -y --no-install-recommends php8.0 php8.0-cli libapache2-mod-php8.0 \
+    php8.0-curl \
+    php8.0-intl \
+    php8.0-gd \
+    php8.0-mbstring \
+    php8.0-pdo \
+    php8.0-mysql \
+    php8.0-zip \
+    php8.0-xml \
+    php8.0-imagick \
+    php8.0-redis \
+    php8.0-bcmath \
+    php8.0-imap && \
     \
     curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer && \
     ln -s /usr/local/bin/composer /usr/bin/composer && \
-    composer global require "hirak/prestissimo:^0.3" && \
     composer clear-cache && \
     \
-    curl -sL https://deb.nodesource.com/setup_12.x | bash - && \
-    apt-get install -y nodejs=12.* && \
-    npm install -g webpack@~4 webpack-cli && \
+    curl -sL https://deb.nodesource.com/setup_14.x | bash - && \
+    apt-get install -y nodejs=14.* && \
+    npm install -g webpack webpack-cli && \
     npm cache clean --force && \
     \
     apt-get remove -y python3.7 && \
@@ -63,8 +61,8 @@ RUN \
     rm /etc/init.d/apache2
 
 COPY ./files/apache/apache2.conf /etc/apache2/
-COPY ./files/php/php.ini /etc/php/7.4/apache2/
-COPY ./files/php/php.ini /etc/php/7.4/cli/
+COPY ./files/php/php.ini /etc/php/8.0/apache2/
+COPY ./files/php/php.ini /etc/php/8.0/cli/
 
 CMD apache2ctl -D FOREGROUND
 
