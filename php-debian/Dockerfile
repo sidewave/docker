@@ -54,6 +54,14 @@ RUN \
     npm install -g webpack webpack-cli && \
     npm cache clean --force && \
     \
+    apt-get install -y supervisor && \
+    groupadd supervisor && \
+    usermod -a root -G supervisor && \
+    \
+    wget https://github.com/mailhog/MailHog/releases/latest/download/MailHog_linux_amd64 && \
+    mv MailHog_linux_amd64 /usr/local/bin/MailHog && \
+    chmod +x /usr/local/bin/MailHog && \
+    \
     apt-get remove -y python3.7 && \
     apt-get clean -y && apt-get autoclean -y && apt-get autoremove -y && \
     rm -rf /var/lib/apt/lists/* /var/lib/log/* /tmp/* /var/tmp/* && \
@@ -63,7 +71,8 @@ RUN \
 COPY ./files/apache/apache2.conf /etc/apache2/
 COPY ./files/php/php.ini /etc/php/8.0/apache2/
 COPY ./files/php/php.ini /etc/php/8.0/cli/
+COPY ./files/supervisor/ /etc/supervisor/
 
-CMD apache2ctl -D FOREGROUND
+CMD service supervisor start && apache2ctl -D FOREGROUND
 
 WORKDIR /var/www/html
