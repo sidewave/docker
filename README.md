@@ -15,6 +15,24 @@ docker buildx rm
 docker buildx create --use && \
 docker buildx build \
 --platform linux/arm64/v8,linux/amd64 \
+--build-arg PHP_VERSION=7.2 \
+--push \
+--tag sidewave/php:7.2-apache . && \
+docker buildx stop && \
+docker buildx rm
+
+docker buildx create --use && \
+docker buildx build \
+--platform linux/arm64/v8,linux/amd64 \
+--build-arg PHP_VERSION=7.3 \
+--push \
+--tag sidewave/php:7.3-apache . && \
+docker buildx stop && \
+docker buildx rm
+
+docker buildx create --use && \
+docker buildx build \
+--platform linux/arm64/v8,linux/amd64 \
 --build-arg PHP_VERSION=7.4 \
 --push \
 --tag sidewave/php:7.4-apache . && \
