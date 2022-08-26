@@ -21,4 +21,12 @@ docker buildx build \
 --tag sidewave/php:8.1-apache . && \
 docker buildx stop && \
 docker buildx rm
+
+docker buildx create --use && \
+docker buildx build \
+--platform linux/arm64/v8,linux/amd64 \
+--push \
+--tag sidewave/mailhog . && \
+docker buildx stop && \
+docker buildx rm
 ```
